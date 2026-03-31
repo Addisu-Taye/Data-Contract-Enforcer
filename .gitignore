@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+.venv/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Data outputs (DO NOT COMMIT GENERATED FILES)
+generated_contracts/
+validation_reports/
+violation_log/
+schema_snapshots/
+enforcer_report/
+
+# Local data (optional depending on submission rules)
+outputs/week3/*.jsonl
+outputs/week5/*.jsonl
+outputs/traces/*.jsonl
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/

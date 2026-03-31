@@ -1,0 +1,13 @@
+pandas
+numpy
+PyYAML
+jsonschema
+scikit-learn
+ydata-profiling
+gitpython
+soda-core
+openai
+anthropic
+langsmith
+python-dateutil
+networkx
