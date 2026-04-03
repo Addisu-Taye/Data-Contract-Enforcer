@@ -27,11 +27,25 @@ def load_json(path: str | Path) -> dict[str, Any]:
 
 def load_latest_lineage_snapshot(path: str | Path) -> dict[str, Any]:
     path = Path(path)
+
+    if not path.exists():
+        raise FileNotFoundError(f"Lineage snapshot file not found: {path}")
+
     with path.open("r", encoding="utf-8") as f:
         lines = [line.strip() for line in f if line.strip()]
+
     if not lines:
-        raise ValueError(f"No lineage snapshots found in {path}")
-    return json.loads(lines[-1])
+        raise ValueError(f"Lineage snapshot file is empty: {path}")
+
+    raw = lines[-1]
+
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ValueError(
+            f"Invalid JSON in lineage snapshot file {path}. "
+            f"Last non-empty line was: {raw[:200]}"
+        ) from e
 
 
 def load_contract(path: str | Path) -> dict[str, Any]:
