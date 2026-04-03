@@ -21,10 +21,15 @@ violation_log/
 schema_snapshots/
 enforcer_report/
 
-# Local data (optional depending on submission rules)
-outputs/week3/*.jsonl
-outputs/week5/*.jsonl
-outputs/traces/*.jsonl
+# Ignore outputs by default
+outputs/*
+
+# BUT include required submission files
+!outputs/week3/
+!outputs/week3/extractions.jsonl
+
+!outputs/week5/
+!outputs/week5/events.jsonl
 
 # Jupyter
 .ipynb_checkpoints/
