@@ -1,0 +1,26 @@
+active_intents:
+  - id: "INT-001"
+    name: "JWT Authentication Migration"
+    status: "IN_PROGRESS"
+    owned_scope:
+      - "src/auth/**"
+      - "src/middleware/jwt.ts"
+    constraints:
+      - "Must not use external auth providers"
+      - "Must maintain backward compatibility with Basic Auth"
+    acceptance_criteria:
+      - "Unit tests in tests/auth/ pass"
+      - "No hardcoded secrets in source files"
+
+  - id: "INT-002"
+    name: "API Rate Limiting Implementation"
+    status: "PENDING"
+    owned_scope:
+      - "src/middleware/rateLimit.ts"
+      - "src/config/limits.ts"
+    constraints:
+      - "Must use Redis for distributed rate limiting"
+      - "Must not block health check endpoints"
+    acceptance_criteria:
+      - "Returns 429 when limit exceeded"
+      - "Includes Retry-After header"

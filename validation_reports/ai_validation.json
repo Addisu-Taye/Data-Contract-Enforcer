@@ -1,0 +1,30 @@
+{
+  "report_id": "76d1b45d-8f79-4e14-ae0e-690820fd661a",
+  "generated_at": "2026-04-03T08:01:40Z",
+  "checks": [
+    {
+      "check": "confidence_drift",
+      "status": "FAIL",
+      "severity": "CRITICAL",
+      "mean": 82.0,
+      "message": "Confidence scale likely shifted (0\u2013100 instead of 0\u20131)"
+    },
+    {
+      "check": "prompt_structure",
+      "status": "PASS",
+      "severity": "LOW",
+      "message": "Input structure valid"
+    },
+    {
+      "check": "output_schema",
+      "status": "PASS",
+      "severity": "LOW",
+      "message": "AI output structure valid"
+    },
+    {
+      "check": "entity_consistency",
+      "status": "SKIP",
+      "message": "Column 'entities[].type' not found"
+    }
+  ]
+}

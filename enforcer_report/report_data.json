@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-04-01T08:40:45Z",
+  "data_health_score": 50,
+  "health_narrative": "Critical data quality issues require immediate action.",
+  "violations_this_week": {
+    "CRITICAL": 2,
+    "HIGH": 1,
+    "MEDIUM": 0,
+    "LOW": 0,
+    "WARNING": 0
+  },
+  "top_violations": [
+    {
+      "check_id": "week3-document-refinery-extractions.extracted_facts.confidence.range",
+      "severity": "CRITICAL",
+      "summary": "The field 'extracted_facts.confidence' failed a range check. Expected min>=0.0 max<=1.0 but observed min=71.0000, max=91.0000, mean=82.0000. Affected records: 5."
+    },
+    {
+      "check_id": "week3-document-refinery-extractions.extracted_facts.confidence.drift",
+      "severity": "HIGH",
+      "summary": "The field 'extracted_facts.confidence' failed a statistical_drift check. Expected z<=2 WARN threshold, z<=3 FAIL threshold but observed mean=82.0000, z=999.26. Affected records: 0."
+    }
+  ],
+  "schema_changes_detected": "See schema evolution report for detailed compatibility analysis.",
+  "ai_system_risk_assessment": {
+    "status": "HIGH_RISK",
+    "summary": "1 AI-specific checks failed.",
+    "details": [
+      {
+        "check": "confidence_drift",
+        "status": "FAIL",
+        "severity": "CRITICAL",
+        "mean": 82.0,
+        "message": "Confidence scale likely shifted (0\u2013100 instead of 0\u20131)"
+      },
+      {
+        "check": "prompt_structure",
+        "status": "PASS",
+        "severity": "LOW",
+        "message": "Input structure valid"
+      },
+      {
+        "check": "output_schema",
+        "status": "PASS",
+        "severity": "LOW",
+        "message": "AI output structure valid"
+      }
+    ]
+  },
+  "violation_log_entries": 1,
+  "recommended_actions": [
+    "Update the Week 3 extraction producer so extracted_facts.confidence remains a float in the 0.0\u20131.0 range.",
+    "Add a pre-deployment contract validation step to block releases when confidence scale drift is detected.",
+    "Run contract validation in CI before downstream systems consume new snapshots."
+  ]
+}

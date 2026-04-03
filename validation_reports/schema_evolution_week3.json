@@ -1,0 +1,51 @@
+{
+  "generated_at": "2026-04-03T07:53:53Z",
+  "contract_id": "week3-document-refinery-extractions",
+  "old_snapshot": "schema_snapshots\\week3-document-refinery-extractions\\20260403_074404.yaml",
+  "new_snapshot": "schema_snapshots\\week3-document-refinery-extractions\\20260403_075336.yaml",
+  "compatibility_verdict": "BREAKING",
+  "change_count": 1,
+  "changes": [
+    {
+      "field_name": "extracted_facts[].confidence",
+      "old_clause": {
+        "type": "number",
+        "required": true,
+        "enum": [
+          "0.91",
+          "0.71",
+          "0.83",
+          "0.77",
+          "0.88"
+        ],
+        "minimum_observed": 0.71,
+        "maximum_observed": 0.91,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "description": "Confidence score. Must remain in 0.0-1.0 float range. Breaking change if converted to 0-100 scale."
+      },
+      "new_clause": {
+        "type": "number",
+        "required": true,
+        "minimum_observed": 0.71,
+        "maximum_observed": 0.91,
+        "minimum": 0.0,
+        "maximum": 1.0,
+        "description": "Confidence score. Must remain in 0.0-1.0 float range. Breaking change if converted to 0-100 scale."
+      },
+      "compatibility": "BREAKING",
+      "rationale": "Enum values removed: ['0.71', '0.77', '0.83', '0.88', '0.91']"
+    }
+  ],
+  "migration_checklist": [
+    "Review all consumers of 'extracted_facts[].confidence' because change is BREAKING: Enum values removed: ['0.71', '0.77', '0.83', '0.88', '0.91']",
+    "Prepare migration or alias plan for 'extracted_facts[].confidence'",
+    "Block deployment until 'extracted_facts[].confidence' downstream compatibility is confirmed"
+  ],
+  "rollback_plan": [
+    "Restore previous schema snapshot",
+    "Re-run ValidationRunner on the restored data shape",
+    "Notify downstream consumers of rollback status",
+    "Revert breaking schema-producing code change before redeploying"
+  ]
+}

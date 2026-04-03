@@ -1,0 +1,96 @@
+version: 2
+models:
+- name: extractions_schema_changed
+  description: Auto-generated dbt tests for extractions_schema_changed
+  columns:
+  - name: doc_id
+    description: ''
+    tests:
+    - not_null
+  - name: source_path
+    description: ''
+    tests:
+    - not_null
+  - name: source_hash
+    description: ''
+    tests:
+    - not_null
+  - name: extracted_facts.__len__
+    description: ''
+    tests:
+    - not_null
+  - name: extracted_facts[].confidence
+    description: Confidence score. Must remain in 0.0-1.0 float range. Breaking change
+      if converted to 0-100 scale.
+    tests:
+    - not_null
+  - name: extracted_facts[].entity_refs
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - '[]'
+  - name: extracted_facts[].fact_id
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - a20ea073-6ad7-4484-bbac-3224daed8e29
+        - a0c3453e-aaf1-438d-ad97-b9a7f4cae42f
+        - 2bf5e10d-2d15-4185-94af-3d8f8eddf05a
+        - 0e8aeeb4-0aed-4bab-a91a-9d8043fc0f9c
+        - 1796df52-bf0a-4c48-8b6a-57834481f2c4
+  - name: extracted_facts[].page_ref
+    description: ''
+    tests:
+    - not_null
+  - name: extracted_facts[].source_excerpt
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - Example excerpt
+  - name: extracted_facts[].text
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - Sample extracted fact
+  - name: entities.__len__
+    description: ''
+    tests:
+    - not_null
+  - name: entities
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - '[]'
+  - name: extraction_model
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - gpt-4
+  - name: processing_time_ms
+    description: ''
+    tests:
+    - not_null
+  - name: token_count.input
+    description: ''
+    tests:
+    - not_null
+  - name: token_count.output
+    description: ''
+    tests:
+    - not_null
+  - name: extracted_at
+    description: ''
+    tests:
+    - not_null

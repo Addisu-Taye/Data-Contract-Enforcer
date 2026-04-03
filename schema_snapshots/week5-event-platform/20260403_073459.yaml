@@ -1,0 +1,129 @@
+kind: DataContract
+apiVersion: v3.0.0
+id: week5-event-platform
+info:
+  title: Week5 Event Platform
+  version: 1.0.0
+  owner: week5-team
+  description: Auto-generated contract for events.
+servers:
+  local:
+    type: local
+    path: outputs\week5\events.jsonl
+    format: jsonl
+terms:
+  usage: Internal inter-system data contract.
+  limitations: Generated from observed data and should be reviewed.
+schema:
+  event_id:
+    type: string
+    required: true
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  event_type:
+    type: string
+    required: true
+    enum:
+    - DocumentProcessed
+    - FactExtracted
+    - ValidationCompleted
+    pattern: ^[A-Z][A-Za-z0-9]+$
+  aggregate_id:
+    type: string
+    required: true
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  aggregate_type:
+    type: string
+    required: true
+    enum:
+    - Document
+    pattern: ^[A-Z][A-Za-z0-9]+$
+  sequence_number:
+    type: integer
+    required: true
+    minimum: 1
+  payload.doc_id:
+    type: string
+    required: true
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  payload.status:
+    type: string
+    required: true
+    enum:
+    - success
+  payload.confidence_mean:
+    type: number
+    required: true
+    minimum_observed: 0.72
+    maximum_observed: 0.9
+    minimum: 0.0
+    maximum: 1.0
+    description: Confidence score. Must remain in 0.0-1.0 float range. Breaking change
+      if converted to 0-100 scale.
+  metadata.causation_id:
+    type: string
+    required: false
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  metadata.correlation_id:
+    type: string
+    required: true
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  metadata.user_id:
+    type: string
+    required: true
+    format: uuid
+    pattern: ^[0-9a-fA-F-]{36}$
+  metadata.source_service:
+    type: string
+    required: true
+    enum:
+    - week3-document-refinery
+  schema_version:
+    type: integer
+    required: true
+    enum:
+    - '1.0'
+    minimum_observed: 1.0
+    maximum_observed: 1.0
+  occurred_at:
+    type: string
+    required: true
+    format: date-time
+  recorded_at:
+    type: string
+    required: true
+    format: date-time
+quality:
+  type: SodaChecks
+  specification:
+    checks for events:
+    - missing_count(event_id) = 0
+    - missing_count(event_type) = 0
+    - accepted_values(event_type) in ['DocumentProcessed', 'FactExtracted', 'ValidationCompleted']
+    - missing_count(aggregate_id) = 0
+    - missing_count(aggregate_type) = 0
+    - accepted_values(aggregate_type) in ['Document']
+    - missing_count(sequence_number) = 0
+    - min(sequence_number) >= 1
+    - missing_count(payload.doc_id) = 0
+    - missing_count(payload.status) = 0
+    - accepted_values(payload.status) in ['success']
+    - missing_count(payload.confidence_mean) = 0
+    - min(payload.confidence_mean) >= 0.0
+    - max(payload.confidence_mean) <= 1.0
+    - missing_count(metadata.correlation_id) = 0
+    - missing_count(metadata.user_id) = 0
+    - missing_count(metadata.source_service) = 0
+    - accepted_values(metadata.source_service) in ['week3-document-refinery']
+    - missing_count(schema_version) = 0
+    - accepted_values(schema_version) in ['1.0']
+    - missing_count(occurred_at) = 0
+    - missing_count(recorded_at) = 0
+    - row_count >= 1
+lineage:
+  upstream: []
+  downstream: []

@@ -1,0 +1,81 @@
+version: 2
+models:
+- name: events
+  description: Auto-generated dbt tests for events
+  columns:
+  - name: event_id
+    description: ''
+    tests:
+    - not_null
+  - name: event_type
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - DocumentProcessed
+        - FactExtracted
+        - ValidationCompleted
+  - name: aggregate_id
+    description: ''
+    tests:
+    - not_null
+  - name: aggregate_type
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - Document
+  - name: sequence_number
+    description: ''
+    tests:
+    - not_null
+  - name: payload.doc_id
+    description: ''
+    tests:
+    - not_null
+  - name: payload.status
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - success
+  - name: payload.confidence_mean
+    description: Confidence score. Must remain in 0.0-1.0 float range. Breaking change
+      if converted to 0-100 scale.
+    tests:
+    - not_null
+  - name: metadata.causation_id
+    description: ''
+  - name: metadata.correlation_id
+    description: ''
+    tests:
+    - not_null
+  - name: metadata.user_id
+    description: ''
+    tests:
+    - not_null
+  - name: metadata.source_service
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - week3-document-refinery
+  - name: schema_version
+    description: ''
+    tests:
+    - not_null
+    - accepted_values:
+        values:
+        - '1.0'
+  - name: occurred_at
+    description: ''
+    tests:
+    - not_null
+  - name: recorded_at
+    description: ''
+    tests:
+    - not_null
