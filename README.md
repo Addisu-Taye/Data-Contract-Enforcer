@@ -132,7 +132,14 @@ The system successfully detects:
 - Downstream impact (blast radius)
 
 ---
+## Final Capabilities
 
+- End-to-end data contract enforcement across pipeline stages
+- Schema validation and statistical drift detection
+- AI-specific validation (confidence drift, schema, entity consistency)
+- Root cause attribution using lineage and git history
+- Schema evolution analysis (BREAKING vs COMPATIBLE)
+- CI/CD-ready validation scripts
 ## Outcome
 
 Final report:
