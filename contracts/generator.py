@@ -268,7 +268,7 @@ def clause_from_profile(profile: dict[str, Any], series: pd.Series) -> dict[str,
         clause["pattern"] = "^[a-f0-9]{64}$"
 
     enum_values = maybe_enum(profile, name)
-    if enum_values:
+    if enum_values and clause["type"] == "string":
         clause["enum"] = enum_values
 
     stats = profile.get("stats")
