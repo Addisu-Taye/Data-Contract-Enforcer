@@ -151,7 +151,42 @@ def make_hashable(value: Any) -> Any:
     if isinstance(value, (dict, list)):
         return json.dumps(value)
     return value
+def check_entity_consistency(df: pd.DataFrame) -> dict[str, Any]:
+    column_name = "entities[].type"
 
+    if column_name not in df.columns:
+        return {
+            "check": "entity_consistency",
+            "status": "SKIP",
+            "message": "Column 'entities[].type' not found",
+        }
+
+    series = df[column_name].dropna().astype(str)
+    if len(series) == 0:
+        return {
+            "check": "entity_consistency",
+            "status": "SKIP",
+            "message": "No entity type values available",
+        }
+
+    allowed = {"PERSON", "ORG", "LOCATION", "DATE", "AMOUNT", "OTHER"}
+    invalid = sorted({value for value in series if value not in allowed})
+
+    if invalid:
+        return {
+            "check": "entity_consistency",
+            "status": "FAIL",
+            "severity": "HIGH",
+            "invalid_values": invalid,
+            "message": "Entity types contain values outside the allowed set",
+        }
+
+    return {
+        "check": "entity_consistency",
+        "status": "PASS",
+        "severity": "LOW",
+        "message": "All entity types are valid",
+    }
 
 def flatten_records(records: list[dict[str, Any]]) -> pd.DataFrame:
     rows = []
@@ -215,9 +250,10 @@ def main():
     df = flatten_records(records)
 
     results = [
-        check_confidence_drift(df),
-        check_prompt_structure(df),
-        check_output_schema(df),
+    check_confidence_drift(df),
+    check_prompt_structure(df),
+    check_output_schema(df),
+    check_entity_consistency(df),
     ]
 
     report = {
